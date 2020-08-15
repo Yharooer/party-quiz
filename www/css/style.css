@@ -1,0 +1,356 @@
+@font-face {
+    font-family: soft;
+    src: url(/img/soft-elegance.woff);
+}
+
+/* vietnamese */
+@font-face {
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+    src: url(https://fonts.gstatic.com/s/quicksand/v21/6xKtdSZaM9iE8KbpRA_hJFQNcOM.woff2) format('woff2');
+    unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;
+  }
+  /* latin-ext */
+  @font-face {
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+    src: url(https://fonts.gstatic.com/s/quicksand/v21/6xKtdSZaM9iE8KbpRA_hJVQNcOM.woff2) format('woff2');
+    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  /* latin */
+  @font-face {
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+    src: url(https://fonts.gstatic.com/s/quicksand/v21/6xKtdSZaM9iE8KbpRA_hK1QN.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+  /* vietnamese */
+  @font-face {
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(https://fonts.gstatic.com/s/quicksand/v21/6xKtdSZaM9iE8KbpRA_hJFQNcOM.woff2) format('woff2');
+    unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;
+  }
+  /* latin-ext */
+  @font-face {
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(https://fonts.gstatic.com/s/quicksand/v21/6xKtdSZaM9iE8KbpRA_hJVQNcOM.woff2) format('woff2');
+    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  /* latin */
+  @font-face {
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(https://fonts.gstatic.com/s/quicksand/v21/6xKtdSZaM9iE8KbpRA_hK1QN.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+  /* vietnamese */
+  @font-face {
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url(https://fonts.gstatic.com/s/quicksand/v21/6xKtdSZaM9iE8KbpRA_hJFQNcOM.woff2) format('woff2');
+    unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;
+  }
+  /* latin-ext */
+  @font-face {
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url(https://fonts.gstatic.com/s/quicksand/v21/6xKtdSZaM9iE8KbpRA_hJVQNcOM.woff2) format('woff2');
+    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  /* latin */
+  @font-face {
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url(https://fonts.gstatic.com/s/quicksand/v21/6xKtdSZaM9iE8KbpRA_hK1QN.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+  /* vietnamese */
+  @font-face {
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url(https://fonts.gstatic.com/s/quicksand/v21/6xKtdSZaM9iE8KbpRA_hJFQNcOM.woff2) format('woff2');
+    unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;
+  }
+  /* latin-ext */
+  @font-face {
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url(https://fonts.gstatic.com/s/quicksand/v21/6xKtdSZaM9iE8KbpRA_hJVQNcOM.woff2) format('woff2');
+    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  /* latin */
+  @font-face {
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url(https://fonts.gstatic.com/s/quicksand/v21/6xKtdSZaM9iE8KbpRA_hK1QN.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+  /* vietnamese */
+  @font-face {
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url(https://fonts.gstatic.com/s/quicksand/v21/6xKtdSZaM9iE8KbpRA_hJFQNcOM.woff2) format('woff2');
+    unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;
+  }
+  /* latin-ext */
+  @font-face {
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url(https://fonts.gstatic.com/s/quicksand/v21/6xKtdSZaM9iE8KbpRA_hJVQNcOM.woff2) format('woff2');
+    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  /* latin */
+  @font-face {
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url(https://fonts.gstatic.com/s/quicksand/v21/6xKtdSZaM9iE8KbpRA_hK1QN.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+
+#guest_list h3 {
+    margin-bottom: 0px;
+}
+
+html {
+    height:100%;
+}
+
+body {
+    margin: 0;
+    background-color: #faf0af;
+    font-family: 'Quicksand';
+}
+
+p {
+    font-family: 'Quicksand';
+}
+
+
+@keyframes rainbow { 
+    0%{background-position: 0% 50%}
+    100%{background-position: 53.5714% 50%}
+}
+
+#party_header, .party_header {
+    background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red, violet, indigo, blue, green, yellow, orange, red, violet, indigo, blue, green, yellow, orange, red, violet, indigo, blue, green, yellow, orange, red);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% 200%;
+    animation: rainbow 2s linear infinite;
+    letter-spacing: 15px;
+    font-size: 45pt;
+}
+
+#login_list {
+    padding: 8px;
+    text-align: center;
+}
+
+#login_list .login_guest {
+    display: inline-block;
+}
+
+#login_list button {
+    display: block;
+    width: 200px;
+    height: 50px;
+    margin: 8px;
+    font-size: 15pt;
+    font-family: soft;
+    background-color: #fccbcb;
+    border: #d9adad medium solid;
+    border-radius: 25px;
+}
+
+#index_page {
+    display: grid;
+    grid-template-columns: auto minmax(150px, 25%);
+    height: 100%;
+}
+
+#index_page #side_bar {
+    background-color: #faf0af;
+    height: 100%;
+}
+
+#index_page #main_section iframe{
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+#index_page #footer {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+}
+
+#last_page,
+#next_page {
+    width: 48px;
+    height: 48px;
+    font-size: 18pt;
+}
+
+h1 {
+    text-align: center;
+    font-family: soft, sans-serif;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+}
+
+.card {
+    border-radius: 4px;
+    background-color: white;
+    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0,0,0,.12);
+    box-sizing: border-box;
+    padding: 16px;
+    margin: 16px auto;
+    width: auto;
+    max-width: 500px;
+}
+
+h2 {
+    text-align: left;
+    font-family: soft, sans-serif;
+    margin-top: 0px;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+}
+
+.input_textbox {
+    margin-bottom: 4px;
+}
+
+.prompt_input_left {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 10px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: all .3s ease-in-out;
+    border-bottom-left-radius: 3px;
+    border-top-left-radius: 3px;
+    background: #7ab893;
+    color: #fff;
+    text-shadow: 0 1px 0 rgba(19, 74, 70, 0.4);
+    font-family: soft;
+    letter-spacing: 1pt;
+    height: 18px;
+    line-height: 20px;
+    margin-right: -4px;
+    min-width: 18px;
+    text-align: center;
+}
+
+.prompt_input_right {
+    display: inline-block;
+    width: 215px;
+    padding: 10px;
+    font-family: soft;
+    font-weight: 400;
+    color: #377D6A;
+    background: #efefef;
+    border: 0;
+    border-bottom-right-radius: 3px;
+    border-top-right-radius: 3px;
+    outline: 0;
+    height: 18px;
+}
+
+select {
+    box-sizing: content-box;
+}
+
+.correct {
+    color: green;
+    font-weight: bolder;
+}
+
+.squircle {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 10px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-radius: 3px;
+    background: #ccc;
+    color: #fff;
+    text-shadow: 0 1px 5px #000;
+    font-family: soft;
+    letter-spacing: 1pt;
+    height: 18px;
+    line-height: 20px;
+    min-width: 18px;
+    text-align: center;
+    border-width: 0px;
+    box-sizing: content-box;
+    margin-bottom: 4px;
+}
+
+.dashdisp_hidden {
+    display: none;
+}
+
+button.squircle {
+    cursor: pointer;
+}
+
+button.squircle:hover {
+    cursor: pointer;
+    background: #bbb;
+}
+
+button.squircle:active {
+    cursor: pointer;
+    background: #aaa;
+}
+
+.big_dash_button {
+    text-align: center;
+    background-color: #0f4c75;
+    font-family: 'Quicksand';
+    color: white;
+    font-size: 24pt;
+    padding: 10px 20px;
+    border-radius: 20px;
+    border-style: solid;
+    border-color: white;
+    border-width: 2px;
+    display: inline-block;
+}

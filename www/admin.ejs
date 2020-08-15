@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Bentley's Party Admin Console</title>
+  <meta name="description" content="Bentley's Party Admin Console">
+  <meta name="author" content="Bentley Carr">
+
+  <link rel="stylesheet" href="/css/style.css">
+  <script type="text/javascript" src="/js/admin.js"></script>
+</head>
+
+<body>
+  <h1 id='party_header'>Bentley's Party</h1>
+  
+  <h1>Admin Console</h1>
+  <div class="card">
+    <h2>New Guest</h2>
+    <form action="/admin/register" method="POST">
+      <label class='prompt_input_left' for="name">Username</label>
+      <input class='prompt_input_right' type="text" id="name" name="username" required />
+      <button type="submit">Register</button>
+    </form>
+  </div>
+
+  <div class='card'>
+    <h2>Guest List</h2>
+    <div id='guest_list'>
+      <% guests.forEach(function(guest,i) { %>
+        <%- include('admin_guests.ejs', {guest: guest}); %>
+        <% if (guests[i+1]) { %>
+          <hr>
+        <% } %>
+      <% }); %>
+    </div>
+  </div>
+</body>
+</html>

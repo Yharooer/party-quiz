@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+<title>Bentley's Party Questions</title>
+  <meta name="description" content="Bentley's Party Dashboard">
+  <meta name="author" content="Bentley Carr">
+
+  <link rel="stylesheet" href="/css/style.css">
+  <script>var MY_USERNAME = '<%= user.username %>';</script>
+  <script type="text/javascript" src="/js/dashboard.js"></script>
+</head>
+
+<body>
+  <h1 id='party_header'>Bentley's Party</h1>
+  
+  <h1>Question Dashboard</h1>
+  <div class="card">
+    <h2>Submit New Question</h2>
+    <div id='multiple_choice'>
+      <div class='input_textbox' id='mc_question'>
+        <label class='prompt_input_left' for="mc_name">Question</label>
+        <input class='prompt_input_right' id='mc_prompt_text' type="text" name="prompt" required />
+      </div>
+      <div id='mc_choices'>
+        <div class='input_textbox' id='mc_a'>
+          <label class='prompt_input_left' for="mc_name">A</label>
+          <input class='prompt_input_right' type="text" id="mc_a_text" name="mc_a" required />
+        </div>
+        <div class='input_textbox' id='mc_b'>
+          <label class='prompt_input_left' for="mc_name">B</label>
+          <input class='prompt_input_right' type="text" id="mc_b_text" name="mc_b" required />
+        </div>
+        <div class='input_textbox' id='mc_c'>
+          <label class='prompt_input_left' for="mc_name">C</label>
+          <input class='prompt_input_right' type="text" id="mc_c_text" name="mc_c" required />
+        </div>
+      </div>      
+      <button id="mc_plus" style='font-size: 15pt;' class='squircle'>+</button>
+      <div class='input_textbox' id='mc_correct'>
+        <label class='prompt_input_left' for="mc_name">Correct Answer</label>
+        <select class='prompt_input_right' id="mc_correct_select" name="mc_correct">
+          <option id='select_0' value='-1'>Bentley chooses</option>
+          <option id='select_a' value='0' selected disabled>A: </option>
+          <option id='select_b' value='1' disabled>B: </option>
+          <option id='select_c' value='2' disabled>C: </option>
+        </select>
+      </div>
+      <button id='mc_submit' type="submit">Submit</button>
+    </div>
+  </div>
+
+  <div class='card'>
+    <h2>Your Questions</h2>
+    <% if (username == 'admin') { %>
+      <div id='toggle_all'>
+        Show questions by everyone <input id='toggle_all_input' oninput='toggleEveryone();' class='checkbox' type='checkbox' role='switch'>
+      </div>
+    <% } %>
+    <div id='question_list'>
+      <% var qq = questions.filter(q => q.author == username || username == 'admin'); %>
+      <% qq.forEach(function(q,i) { %>
+        <% if (q.type == 'mc') { %>
+          <%- include('dashdisp_mc.ejs', {question: q}); %>
+        <% } %>
+        <% if (qq[i+1]) { %>
+        <hr <% if (qq[i+1].author != username) { %> class='dashdisp_hidden'<% } %>>
+        <% } %>
+      <% }); %>
+    </div>
+  </div>
+</body>
+</html>

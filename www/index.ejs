@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Bentley's Party</title>
+  <meta name="description" content="Bentley's Party">
+  <meta name="author" content="Bentley Carr">
+
+  <link rel="stylesheet" href="/css/style.css">
+  <script type="text/javascript" src="/js/index.js"></script>
+  <script>
+    QUIZ.username = "<%= username %>";
+  </script>
+</head>
+
+<body id="index_page" style="overflow:hidden;">
+  <div id='main_section'>
+    <iframe id='iframe1' src='/pages/waiting'>
+        
+    </iframe>
+    
+    <iframe id='iframe2' src='/pages/test2'>
+    
+    </iframe>
+  </div>
+  <div id=side_bar>
+    <h1>Scores</h1>
+    <form action='/logout?_method=DELETE' method="POST">
+        <button type='submit'>Log out</button>
+    </form>
+  </div>
+  <%  if (username == 'admin') { %>
+  <div id="footer">
+      <button id='last_page'>←</button>
+      <button id='next_page'>→</button>
+  </div>
+  <% } %>
+</body>
+</html>

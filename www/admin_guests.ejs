@@ -1,0 +1,11 @@
+<div class='admin_guest'>
+    <h3><%= guest.username %></h3>
+    <div id='visible_name_<%= guest.username %>'>
+        Visible name: <span class="visible_name_display"><%= guest.visible_name %></span>
+        <input style="display: none;" class="visible_name_textbox" type="text" name="name">
+        <button class='visible_change_button' onclick='initiateChangeVisibleName("<%= guest.username %>");'>Change</button>
+    </div>
+    <% if (guest.username != 'admin') { %>
+        <button onclick='deleteUser("<%= guest.username %>");'>Remove</button>
+    <% } %>
+</div>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" style="display:grid; place-items:center">
+<head>
+  <meta charset="utf-8">
+
+  <title>Bentley's Party Login</title>
+  <meta name="description" content="Bentley's Party Login">
+  <meta name="author" content="Bentley Carr">
+
+  <link rel="stylesheet" href="/css/style.css">
+  <script type="text/javascript" src="/js/login.js"></script>
+
+</head>
+
+<body>
+  <h1 id='party_header'>Bentley's Party</h1>
+  
+  <h1>Who are you?</h1>
+  <div id='login_list'>
+    <% guests.forEach(function(guest) { %>
+      <% // if (guest.username !== 'admin') { %>
+      <% if (true) { %>
+        <%- include('login_guests.ejs', {guest: guest}); %>
+      <% } %>
+    <% }); %>
+  </div>
+</body>
+</html>
