@@ -11,7 +11,7 @@ const methodOverride = require('method-override');
 const mongoose = require('mongoose');
 const User = require('./user');
 const Question = require('./question');
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 const mongodb = mongoose.connect(process.env.MONGO_DB, {useNewUrlParser: true, useUnifiedTopology: true}, err => {
     if (err) {
