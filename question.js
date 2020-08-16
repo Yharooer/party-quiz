@@ -10,7 +10,6 @@ questionSchema.statics.newQuestion = function (data, cb) {
     // TODO this is problematic if two people create questions at the same time.
     Question.getAll(questions => {
         var new_question = new Question({
-            order: ordernum,
             author: data.author,
             type: data.type,
             data: data
