@@ -15,6 +15,17 @@
   <h1 id='party_header'>Bentley's Party</h1>
   
   <h1>Admin Console</h1>
+
+  <div class="card">
+    <h2>Quiz Controls</h2>
+    <form action="/admin/new_quiz" method="POST">
+      <button type="submit">Reset Scores and Quiz Order</button>
+    </form>
+    <form action="/admin/reset_waiting" method="POST">
+      <button type="submit">Set Waiting Page</button>
+    </form>
+  </div>
+
   <div class="card">
     <h2>New Guest</h2>
     <form action="/admin/register" method="POST">

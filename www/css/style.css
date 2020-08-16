@@ -206,23 +206,51 @@ p {
     height: 100%;
 }
 
+#index_page #side_bar .border_left {
+  border-left: 2px dashed grey;
+  position: absolute;
+  top: 2%;
+  bottom: 2%;
+}
+
 #index_page #main_section iframe{
     width: 100%;
     height: 100%;
     border: 0;
 }
 
-#index_page #footer {
+#footer {
     position: absolute;
     right: 12px;
     bottom: 12px;
 }
 
-#last_page,
-#next_page {
+#footer button {
+  padding: 10px;
+  font-size: 13pt;
+  transition: all .3s ease-in-out;
+  border-radius: 6px;
+  text-align: center;
+  border: none;
+  height: fit-content;
+  background-color: #ffffff99;
+  margin: 8px auto;
+  box-shadow: 2px 2px 5px 0px #00000022;
+}
+
+#footer button:hover {
+  transform: scale(1.05);
+  background-color: #fff;
+  box-shadow: 2px 2px 7px 0px #00000022;
+  cursor: pointer;
+}
+
+#footer #last_page,
+#footer #next_page {
     width: 48px;
     height: 48px;
     font-size: 18pt;
+    margin-top: 0px;
 }
 
 h1 {
@@ -296,7 +324,7 @@ select {
     box-sizing: content-box;
 }
 
-.correct {
+.dashdisp_mc .correct {
     color: green;
     font-weight: bolder;
 }
@@ -353,4 +381,68 @@ button.squircle:active {
     border-color: white;
     border-width: 2px;
     display: inline-block;
+}
+
+.footer-button-wide {
+  display:block;
+  margin-bottom: 4px;
+  width: 100px;
+  height: 35px;
+  font-size: 14pt;
+  font-family: "Quicksand";
+}
+
+.mc_answer {
+    display: block;
+    padding: 10px;
+    font-size: 13pt;
+    transition: all .3s ease-in-out;
+    border-radius: 6px;
+    text-align: center;
+    width: 300px;
+    background-color: #ffffff99;
+    margin: 8px auto;
+    box-shadow: 2px 2px 5px 0px #00000022;
+}
+
+.mc_answer:hover {
+  background-color: #ffffffff;
+  transform: scale(1.05);
+  box-shadow: 2px 2px 7px 0px #00000022;
+  cursor: pointer;
+}
+
+.mc_answer.selected {
+  background-color: #4444cc;
+  font-weight: bolder;
+  transform: scale(1.2);
+  margin: 16px auto;
+  color: white;
+  box-shadow: 5px 5px 13px 0px #00000022;
+}
+
+.mc_answer.selected:hover {
+  cursor: default;
+}
+
+.mc_answer.correct {
+  background-color: #aaffaa;
+}
+
+.mc_answer.correct.selected {
+   font-weight: bolder;
+   color: white;
+   background-color: #119911;
+   transform: scale(1.2);
+}
+
+.mc_answer.incorrect {
+  background-color: #ffaaaa;
+}
+
+.mc_answer.incorrect.selected {
+   font-weight: bolder;
+   color: white;
+   background-color: #991111;
+   transform: scale(1.2);
 }

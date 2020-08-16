@@ -48,6 +48,20 @@ userSchema.statics.login = function(username, cb) {
     });
 }
 
+userSchema.statics.getVisibleNameFromUsername = async function(username) {
+    try {
+        const user = await User.findOne({username: username});
+        if (user) {
+            return user.visible_name;
+        } else {
+            return null;
+        }
+    }
+    catch (e) {
+        return null;
+    }
+}
+
 userSchema.statics.update_admin = function(body, cb) {
     if (body.username == null) {
         return cb(false);
@@ -85,6 +99,16 @@ userSchema.statics.getAll = function(cb) {
     User.find({}, (err, users) => {
         cb(users);
     });
+}
+
+userSchema.methods.updateScore = function() {
+    const new_total_score = this.scores.map(s => s == null ? 0 : s).reduce((a,b) => a+b,0);
+    const hasChanged = new_total_score == this.total_score;
+    this.total_score = new_total_score;
+    if (hasChanged) {
+        this.save().then();
+    }
+    return new_total_score;
 }
 
 module.exports = User = mongoose.model('User', userSchema, 'users');

@@ -50,6 +50,25 @@ app.use('/pages', checkAuthenticated, (req, res) => {
     res.render(__dirname + '/www/pages' + req.url + '.ejs', {username: req.user.username});
 });
 
+app.use('/question', checkAuthenticated, (req, res) => {
+    Question.getQuestion(req.url.replace('/', ''), async (success, q) => {
+        if (!success) {
+            res.status(400).send('Unable to find question.');
+            return;
+        }
+
+        const author_name = await User.getVisibleNameFromUsername(q.author);
+
+        switch (q.type) {
+            case 'mc':
+                res.render(__dirname + '/www/question_templates/mc.ejs', {username: req.user.username, question: q, author_name: author_name});
+                break;
+            default:
+                res.status(400).send('Unknown question type.');
+        }
+    });
+});
+
 app.get('/login', checkNotAuthenticated, (req, res) => {
     User.getAll((guests) => res.render(__dirname + '/www/login.ejs', {guests: guests}));
 });
@@ -117,6 +136,16 @@ app.post('/admin/delete', checkAdmin, (req, res) => {
     })
 });
 
+app.post('/admin/new_quiz', checkAdmin, (req, res) => {
+    page_manager.reorderAllQuestions();
+    res.redirect('/');
+});
+
+app.post('/admin/reset_waiting', checkAdmin, (req, res) => {
+    page_manager.resetWaiting();
+    res.redirect('/');
+});
+
 app.get('/dashboard', checkAuthenticated, (req, res) => {
     Question.getAll(qs => res.render(__dirname + '/www/dashboard.ejs', {user: req.user, questions: qs, username: req.user.username}));
 });
@@ -166,4 +195,4 @@ function checkAdmin(req, res, next) {
 }
 
 const quiz_backend = require('./quiz-backend');
-quiz_backend(server);
+const page_manager = quiz_backend(server);

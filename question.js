@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const questionSchema = new mongoose.Schema({
-    order: {type: Number},
     author: {type: String},
     type: {type: String},
     data: {type: mongoose.Mixed}  
@@ -10,8 +9,6 @@ const questionSchema = new mongoose.Schema({
 questionSchema.statics.newQuestion = function (data, cb) {
     // TODO this is problematic if two people create questions at the same time.
     Question.getAll(questions => {
-        var ordernum = questions.length > 0 ? Math.max( ... questions.map(q => q.order)) + 1 : 0;
-
         var new_question = new Question({
             order: ordernum,
             author: data.author,
@@ -71,9 +68,6 @@ questionSchema.statics.update = function(body, cb) {
 }
 
 questionSchema.statics.delete = async function(id, cb) {
-    // TODO this is problematic if multiple people delete questions at the same time.
-    var order = await Question.findOne({_id: id});
-
     Question.findOneAndDelete({_id: id}, { useFindAndModify: false }, (err, doc) => {
         if (err) {
             return cb(false);
@@ -93,6 +87,10 @@ questionSchema.statics.getAll = function(cb) {
     Question.find({}, (err, questions) => {
         cb(questions);
     });
+}
+
+questionSchema.statics.getAllAsync = async function() {
+    return Question.find({});
 }
 
 questionSchema.statics.getAllByAuthor = function(author,cb) {

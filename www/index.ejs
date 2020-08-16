@@ -16,25 +16,30 @@
 
 <body id="index_page" style="overflow:hidden;">
   <div id='main_section'>
-    <iframe id='iframe1' src='/pages/waiting'>
+    <iframe id='iframe1' src='/pages/blank'>
         
     </iframe>
     
-    <iframe id='iframe2' src='/pages/test2'>
+    <iframe id='iframe2' src='/pages/blank'>
+    
+    </iframe>
+    <iframe id='iframe3' src='/pages/blank'>
     
     </iframe>
   </div>
   <div id=side_bar>
     <h1>Scores</h1>
-    <form action='/logout?_method=DELETE' method="POST">
-        <button type='submit'>Log out</button>
-    </form>
+    <div class='border_left'></div>
   </div>
-  <%  if (username == 'admin') { %>
   <div id="footer">
-      <button id='last_page'>←</button>
-      <button id='next_page'>→</button>
+      <form action='/logout?_method=DELETE' method="POST">
+        <button class="footer-button-wide" type='submit'>Log out</button>
+      </form>
+      <%  if (username == 'admin') { %>
+        <button class="footer-button-wide" onclick='window.location.href="/admin"'>Admin</button>
+        <button id='last_page'>←</button>
+        <button id='next_page'>→</button>
+      <% } %>
   </div>
-  <% } %>
 </body>
 </html>
