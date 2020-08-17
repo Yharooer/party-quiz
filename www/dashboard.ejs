@@ -45,6 +45,7 @@
         </div>
       </div>      
       <button id="mc_plus" style='font-size: 15pt;' class='squircle'>+</button>
+      <button class='squircle'>Include Image</button>
       <div class='input_textbox' id='mc_correct'>
         <label class='prompt_input_left' for="mc_name">Correct Answer</label>
         <select class='prompt_input_right' id="mc_correct_select" name="mc_correct">
@@ -91,5 +92,10 @@
       </div>
     </div>
   <% } %>
+  <div id='footer'>
+    <form action='/logout?_method=DELETE' method="POST">
+      <button class="footer-button-wide" type='submit'>Log out</button>
+    </form>
+  </div>
 </body>
 </html>
