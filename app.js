@@ -84,7 +84,7 @@ app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
 }));
 
 app.get('/secret_register', checkNotAuthenticated, (req, res) => {
-    res.render(__dirname + '/www/register.ejs');
+    res.render(__dirname + '/www/secret_register.ejs');
 });
 
 app.post('/secret_register', checkNotAuthenticated, (req, res) => {

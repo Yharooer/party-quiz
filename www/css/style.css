@@ -281,6 +281,7 @@ h2 {
 
 .input_textbox {
     margin-bottom: 4px;
+    display: flex;
 }
 
 .prompt_input_left {
@@ -300,14 +301,12 @@ h2 {
     letter-spacing: 1pt;
     height: 18px;
     line-height: 20px;
-    margin-right: -4px;
     min-width: 18px;
     text-align: center;
 }
 
 .prompt_input_right {
     display: inline-block;
-    width: 215px;
     padding: 10px;
     font-family: soft;
     font-weight: 400;
@@ -318,6 +317,7 @@ h2 {
     border-top-right-radius: 3px;
     outline: 0;
     height: 18px;
+    flex-grow: 1;
 }
 
 select {

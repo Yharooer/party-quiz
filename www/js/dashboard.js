@@ -32,8 +32,8 @@ window.addEventListener('load', function() {
         var new_letter = MULT_CHOICE.letters[MULT_CHOICE.num_choices - 1];
         var new_choice = document.createElement('div');
         new_choice.id = 'mc_' + new_letter.toLowerCase();
-        new_choice.className = 'input_textbox prompt_input_right';
-        new_choice.innerHTML = '<label class=\'prompt_input_left\' for="mc_name">' + new_letter + '</label> <input type="text" id="mc_' + new_letter.toLowerCase() + '_text" name="mc_' + new_letter.toLowerCase() + '" required />';
+        new_choice.className = 'input_textbox';
+        new_choice.innerHTML = '<label class=\'prompt_input_left\' for="mc_name">' + new_letter + '</label> <input class="prompt_input_right" type="text" id="mc_' + new_letter.toLowerCase() + '_text" name="mc_' + new_letter.toLowerCase() + '" required />';
         if (MULT_CHOICE.num_choices >= MULT_CHOICE.max_choices) {
             MULT_CHOICE.mc_plus.style.display = 'none';   
         }

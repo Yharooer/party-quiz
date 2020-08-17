@@ -102,3 +102,6 @@ dist
 
 # TernJS port file
 .tern-port
+
+# WSL Zone Identifier files
+*.Identifier

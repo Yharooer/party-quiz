@@ -95,7 +95,9 @@ class Participant {
                         // Tell user what the current scores are.
                         let curr_scores = {};
                         activeParticipants.forEach(p => {
-                            curr_scores[p.username] = p.user.updateScore();
+                            if (p.user != null) {
+                                curr_scores[p.username] = p.user.updateScore();
+                            }
                         });
                         this.send({
                             action: "SCORES",
