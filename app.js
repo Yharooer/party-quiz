@@ -13,6 +13,11 @@ const User = require('./user');
 const Question = require('./question');
 const port = process.env.PORT || 3000;
 
+if (process.env.NODE_ENV == 'production') {
+    const sslRedirect = require('heroku-ssl-redirect');
+    app.use(sslRedirect());
+}
+
 const mongodb = mongoose.connect(process.env.MONGO_DB, {useNewUrlParser: true, useUnifiedTopology: true}, err => {
     if (err) {
         console.log('Error connecting to MongoDB server.');
@@ -171,7 +176,7 @@ app.post('/dashboard/delete_question', checkAuthenticated, (req, res) => {
     })
 });
 
-const server = app.listen(port, () => console.log(`Party quiz listening at http://localhost:${port}`));
+const server = app.listen(port, () => console.log(`Party quiz listening on port ${port}.`));
 
 function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {

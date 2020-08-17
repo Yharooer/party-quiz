@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-
-<title>Bentley's Party Questions</title>
+  <title>Bentley's Party Questions</title>
   <meta name="description" content="Bentley's Party Dashboard">
   <meta name="author" content="Bentley Carr">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="/css/style.css">
   <script>var MY_USERNAME = '<%= user.username %>';</script>
@@ -18,7 +18,14 @@
   <h1>Question Dashboard</h1>
   <div class="card">
     <h2>Submit New Question</h2>
+    <div id='dash_qtype_select'>
+      <div style='margin-right:2px;' onclick='section_mult_choice();' class='option'>Multiple Choice</div>&nbsp;&nbsp;
+      <div style='margin-left: 2px;' onclick='section_pop_vote();' class='option'>Popular Vote</div>
+    </div>
+
     <div id='multiple_choice'>
+      <p>Enter the question and three or more answers. The players who guess the correct answer get points. Either you choose the correct answer, or if it's a Bentley-related question, then select 'Bentley chooses' and anyone who chooses the same answer as me gets points. (I don't get points if it's a 'Bentley chooses' question. 😢)</p>
+      <hr>
       <div class='input_textbox' id='mc_question'>
         <label class='prompt_input_left' for="mc_name">Question</label>
         <input class='prompt_input_right' id='mc_prompt_text' type="text" name="prompt" required />
@@ -49,26 +56,40 @@
       </div>
       <button id='mc_submit' type="submit">Submit</button>
     </div>
-  </div>
 
-  <div class='card'>
-    <h2>Your Questions</h2>
-    <% if (username == 'admin') { %>
-      <div id='toggle_all'>
-        Show questions by everyone <input id='toggle_all_input' oninput='toggleEveryone();' class='checkbox' type='checkbox' role='switch'>
+    <div id='popular_vote' style='display:none;'>
+      <p>Enter a prompt below. Players submit responses to the prompt (eg like Cards against Humanity), and then we vote on which is the best / most funny. Players with most upvotes get points.</p>
+      <hr>
+      <div class='input_textbox' id='pv_prompt'>
+        <label class='prompt_input_left' for="mc_name">Prompt</label>
+        <input class='prompt_input_right' id='pv_prompt_text' type="text" name="prompt" required />
       </div>
-    <% } %>
-    <div id='question_list'>
-      <% var qq = questions.filter(q => q.author == username || username == 'admin'); %>
-      <% qq.forEach(function(q,i) { %>
-        <% if (q.type == 'mc') { %>
-          <%- include('dashdisp_mc.ejs', {question: q}); %>
-        <% } %>
-        <% if (qq[i+1]) { %>
-        <hr <% if (qq[i+1].author != username) { %> class='dashdisp_hidden'<% } %>>
-        <% } %>
-      <% }); %>
+      <button id='pv_submit' type="submit">Submit</button>
     </div>
   </div>
+
+  <% var qq = questions.filter(q => q.author == username || username == 'admin'); %>
+  <% if (qq.length > 0) { %>
+    <div class='card'>
+      <h2>Your Questions</h2>
+      <% if (username == 'admin') { %>
+        <div id='toggle_all'>
+          Show questions by everyone <input id='toggle_all_input' oninput='toggleEveryone();' class='checkbox' type='checkbox' role='switch'>
+        </div>
+      <% } %>
+      <div id='question_list'>
+        <% qq.forEach(function(q,i) { %>
+          <% if (q.type == 'mc') { %>
+            <%- include('dashdisp_mc.ejs', {question: q}); %>
+          <% } else if (q.type == 'pv') { %>
+            <%- include('dashdisp_pv.ejs', {question: q}); %>
+          <% } %>
+          <% if (qq[i+1]) { %>
+          <hr <% if (qq[i+1].author != username) { %> class='dashdisp_hidden'<% } %>>
+          <% } %>
+        <% }); %>
+      </div>
+    </div>
+  <% } %>
 </body>
 </html>

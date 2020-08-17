@@ -96,6 +96,44 @@ window.addEventListener('load', function() {
     }
 });
 
+/* POPULAR VOTE */
+POP_VOTE = {};
+
+window.addEventListener('load', function() {
+    POP_VOTE.submit = document.getElementById('pv_submit');
+    POP_VOTE.submit.onclick = function() {
+        // Submit question request by making a form.
+        var form = document.createElement('form');
+        form.method = 'post';
+        form.action = '/dashboard/new_question';
+        form.style.display = 'none';
+        form.style.visibility = 'hidden';
+
+        var promptField = document.createElement('input');
+        promptField.name = 'prompt';
+        promptField.value = document.getElementById('pv_prompt_text').value;
+
+        if (promptField.value.trim() == '') {
+            alert('Cannot submit empty prompt!')
+        }
+
+        form.appendChild(promptField);
+
+        var authorField = document.createElement('input');
+        authorField.name = 'author';
+        authorField.value = MY_USERNAME;
+        form.appendChild(authorField);
+
+        var authorField = document.createElement('input');
+        authorField.name = 'type';
+        authorField.value = 'pv';
+        form.appendChild(authorField);
+
+        document.body.appendChild(form);
+        form.submit();
+    }
+});
+
 function deleteQuestion(qid) {
     if (confirm('Are you sure you want delete to this question?')) {
         // Submit post request by making a form.
@@ -120,4 +158,20 @@ function toggleEveryone() {
     } else {
         Array.from(document.getElementsByClassName('dashdisp_hidden')).forEach(e => e.style.display = 'none');
     }
+}
+
+function section_mult_choice() {
+    var mc = document.getElementById('multiple_choice');
+    var pv = document.getElementById('popular_vote');
+
+    mc.style.display = 'block';
+    pv.style.display = 'none';
+}
+
+function section_pop_vote() {
+    var mc = document.getElementById('multiple_choice');
+    var pv = document.getElementById('popular_vote');
+
+    mc.style.display = 'none';
+    pv.style.display = 'block';
 }

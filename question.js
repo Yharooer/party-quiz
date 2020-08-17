@@ -71,12 +71,6 @@ questionSchema.statics.delete = async function(id, cb) {
         if (err) {
             return cb(false);
         } else{
-            Question.getAll(questions => questions.forEach(q => {
-                if (q.order > order) {
-                    q.order -= 1;
-                    q.save();
-                }
-            }));
             return cb(true);
         }
     });

@@ -173,10 +173,10 @@ class PagesManager {
         Preferences.setPrefs(this.data).then();
     }
 
-    onAnswerSubmit(packet) {
+    onAnswerSubmit(packet, username) {
         const theqc = this.questionControllers.find(qc => qc == null ? false : qc.id == packet.id);
         if (theqc != undefined) {
-            theqc.onAnswerSubmit(packet.answer);
+            theqc.onAnswerSubmit(packet.answer, username);
         }
     }
 
@@ -247,6 +247,9 @@ class PagesManager {
             this.data.currentIndex = 0;
         }
 
+        this.questionControllers = [];
+        this.createQuestionController(this.data.currentIndex == null ? 0 : this.data.currentIndex);
+
         let update_pages = [];
         update_pages[0] = this.data.currentIndex > 0 ? this.data.questionOrder[this.data.currentIndex - 1] : '/pages/blank';
         update_pages[1] = this.data.questionOrder[this.data.currentIndex];
@@ -267,6 +270,8 @@ class PagesManager {
         this.data.currentIndex = 0;
         this.updatePreferences();
         this.callPageReset();
+        this.questionControllers = [];
+        this.createQuestionController(this.data.currentIndex == null ? 0 : this.data.currentIndex);
     }
 
     shuffleArray(array) {
@@ -305,13 +310,14 @@ class MCQuestionController {
         this.id = question._id;
         this.answer = question.data.answer;
         this.letters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p'];
-        this.answer_numeric = this.letters[this.answer];
+        this.answer_numeric = this.answer == -1 ? undefined : this.letters[this.answer];
         this.participantAnswers = {};
         this.index = index;
         this.advanced = false;
     }
 
     onAnswerSubmit(answer, username) {
+        console.log(`username is ${username}`);
         this.participantAnswers[username] = answer;
         const allAnswered = activeParticipants.every(p => this.participantAnswers[p.username] != null);
         if (allAnswered) {
@@ -320,6 +326,11 @@ class MCQuestionController {
     }
 
     onAdvance() {
+        if (this.answer == -1) {
+            this.answer_numeric = this.participantAnswers['admin'];
+        }
+        console.log(this.participantAnswers);
+
         this.updateAllScores();
         Participant.sendToAll({
             action: 'QUESTION_TEMPLATE',
@@ -335,7 +346,7 @@ class MCQuestionController {
             const ans = this.participantAnswers[p.username];
             if (ans != null) {
                 p.user.scores[this.index] = ans == this.answer_numeric ? 4 : 0;
-                curr_scores[p.username] = p.updateScore();
+                curr_scores[p.username] = p.user.updateScore();
             }
         });
 
@@ -351,9 +362,6 @@ class MCQuestionController {
     }
 
     onUserResume(p) {
-        console.log(this);
-        console.log(this.participantAnswers);
-
         p.send({
             action: 'QUESTION_TEMPLATE',
             secondary_action: 'RESUME',
