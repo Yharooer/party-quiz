@@ -271,6 +271,7 @@ class PagesManager {
             this.data.currentIndex = 0;
             this.updatePreferences();
             this.callPageReset();
+            return;
         }
 
         this.shuffleArray(allQuestions);
