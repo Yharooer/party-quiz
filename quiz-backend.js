@@ -210,7 +210,7 @@ class PagesManager {
     createQuestionController(index) {
         if (this.questionControllers[index] == null) {
             const path = this.data.questionOrder[index];
-            if (path.startsWith('/question/')) {
+            if (path != null && path.startsWith('/question/')) {
                 const id = path.replace('/question/', '');
                 const question = Question.getQuestion(id, (success, question) => {
                     if (question.type == 'mc') {
@@ -265,6 +265,14 @@ class PagesManager {
         }
 
         const allQuestions = await Question.getAllAsync();
+
+        if (allQuestions.length == 0) {
+            this.data.questionOrder = ['/pages/empty'];
+            this.data.currentIndex = 0;
+            this.updatePreferences();
+            this.callPageReset();
+        }
+
         this.shuffleArray(allQuestions);
         this.data.questionOrder = allQuestions.map(q => '/question/' + q._id);
         this.data.currentIndex = 0;
