@@ -75,6 +75,13 @@
           <option id='select_c' value='2' disabled>C: </option>
         </select>
       </div>
+      <% if (username == 'AidanLam') { %>
+        <div>
+          <input type="checkbox" id="mc_anon_check" name="anon">
+          <label for="anon">Anonymous submission</label>
+          <small>Hide my name during the quiz in case I want to be mean to Bentley. (I was forced to include this 😠)</small>
+        </div>
+      <% } %>
       <button id='mc_submit' type="submit">Submit</button>
     </div>
 

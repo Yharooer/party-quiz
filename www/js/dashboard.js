@@ -86,6 +86,12 @@ window.addEventListener('load', function() {
             form.appendChild(imgField);
         }
 
+        var anonField = document.createElement('input');
+        anonField.name = 'anon';
+        var anonbutton = document.getElementById('mc_anon_check');
+        anonField.value = (anonbutton == null) ? false : anonbutton.checked;
+        form.appendChild(anonField);
+
         for (i=0; i<MULT_CHOICE.num_choices; i++) {
             var numField = document.createElement('input');
             numField.name = 'mc_' + MULT_CHOICE.letters[i].toLowerCase();

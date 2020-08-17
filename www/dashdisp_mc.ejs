@@ -6,11 +6,14 @@
     <% var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm']; %>
     <% letters.forEach(function(letter, i) { %>
         <% if (question.data['mc_' + letter] != null) { %>
-        <p style='margin-block-start: 0; margin-block-end: 0;'<% if (question.data['answer'] == i) { %> class='correct'<% } %>><b><%= letter.toUpperCase() %>: </b><%= question.data['mc_'+letter] %></p>
+        <p style='margin-block-start: 0; margin-block-end: 0;'<% if (question.data['answer'] == i && username == question.author) { %> class='correct'<% } %>><b><%= letter.toUpperCase() %>: </b><%= question.data['mc_'+letter] %></p>
         <% } %>
     <% }); %>
     <% if (question.data['answer'] == -1) { %>
         <small style='display:block;'>Bentley chooses the correct answer.</small>
+    <% } %>
+    <% if (question.data.anon) { %>
+        <small style='display:block;'>Your name will be hidden when displaying the quiz. (Bentley can still see who submitted the question.)</small>
     <% } %>
     <button onclick='deleteQuestion("<%= question._id %>");''>Delete</button>
 </div>

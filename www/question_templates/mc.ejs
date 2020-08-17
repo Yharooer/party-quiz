@@ -19,7 +19,11 @@
 
 <body style='max-width: 800px; text-align: center;'>
     <h1><%= question.data.prompt %></h1>
-    <small>Submitted by <%= author_name %>.</small>
+    <% if (question.data.anon) { %>
+      <small>Submitted anonymously.</small>
+    <% } else { %>
+      <small>Submitted by <%= author_name %>.</small>
+    <% } %>
 
     <% var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p']; %>
     <% letters.forEach(function(letter, i) { %>
