@@ -16,6 +16,21 @@
   <h1 id='party_header'>Bentley's Party</h1>
   
   <h1>Question Dashboard</h1>
+  <div class='card'>
+    <h2>Hello!</h2>
+    <p>Thank you for signing in and thank you for submitting questions for the quiz! It would be great if everyone could submit a bunch of questions for Saturday! Here are some suggestions:
+      <ul>
+        <li>Bentley-related trivia (or trivia related to someone specific in the quiz).</li>
+        <li>Caption this image (select popular vote below).</li>
+        <li>Cards-Against-Humanity or Quiplash style prompts (select popular vote below).</li>
+      </ul>
+      Please remember that there are both Aussie and Cambridge people in the quiz so please try to keep questions as inclusive as possible (but a few Aussie / Cambridge specific questions are ok too).</p>
+
+      <p>If you have any questions (or you think the website is broken) please message me!</p>
+      <p style='margin-bottom: 0;'>Cheers! :)<br />-Bentley</p>
+  </div>
+
+
   <div class="card">
     <h2>Submit New Question</h2>
     <div id='dash_qtype_select'>
@@ -24,7 +39,8 @@
     </div>
 
     <div id='multiple_choice'>
-      <p>Enter the question and three or more answers. The players who guess the correct answer get points. Either you choose the correct answer, or if it's a Bentley-related question, then select 'Bentley chooses' and anyone who chooses the same answer as me gets points. (I don't get points if it's a 'Bentley chooses' question. 😢)</p>
+      <p>Multiple choice question. Either you choose the correct answer, or if it's a Bentley-related question, then select 'Bentley chooses' and anyone who chooses the same answer as me gets points.</p>
+      <small>(I don't get points if it's a 'Bentley chooses' question. 😢)</small>
       <hr>
       <div class='input_textbox' id='mc_question'>
         <label class='prompt_input_left' for="mc_name">Question</label>
@@ -45,7 +61,11 @@
         </div>
       </div>      
       <button id="mc_plus" style='font-size: 15pt;' class='squircle'>+</button>
-      <button class='squircle'>Include Image</button>
+      <!-- <button class='squircle'>Include Image</button> -->
+      <div id='mc_image_div'>
+        <p style='margin-top:0; margin-bottom:4px;'>Add Image (optional):
+        <input type="file" id="mc_image_upload" onchange="onMcImageUpload();" accept="image/*"></p>
+      </div>
       <div class='input_textbox' id='mc_correct'>
         <label class='prompt_input_left' for="mc_name">Correct Answer</label>
         <select class='prompt_input_right' id="mc_correct_select" name="mc_correct">
@@ -64,6 +84,10 @@
       <div class='input_textbox' id='pv_prompt'>
         <label class='prompt_input_left' for="mc_name">Prompt</label>
         <input class='prompt_input_right' id='pv_prompt_text' type="text" name="prompt" required />
+      </div>
+      <div id='pv_image_div'>
+        <p style='margin-top:0; margin-bottom:4px;'>Add Image (optional):
+        <input type="file" id="pv_image_upload" onchange="onPvImageUpload();" accept="image/*"></p>
       </div>
       <button id='pv_submit' type="submit">Submit</button>
     </div>

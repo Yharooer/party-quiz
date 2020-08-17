@@ -481,3 +481,8 @@ button.squircle:active {
    background-color: #991111;
    transform: scale(1.2);
 }
+
+.dash_image {
+  vertical-align: top;
+  max-height: 100px;
+}

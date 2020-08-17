@@ -292,16 +292,20 @@ class PagesManager {
         this.updatePreferences();
         this.callPageReset();
     }
+
+    setRedirect() {
+        if (!this.loaded) {
+            this.loadedCb = () => this.resetWaiting();
+            return;
+        }
+
+        this.data.questionOrder = ['/pages/redirect'];
+        this.data.currentIndex = 0;
+        this.updatePreferences();
+        this.callPageReset();
+    }
 }
 
-
-// Submit question answers
-// Influence scores
-//class QuestionController {
-//    constructor() {
-//
-//    }
-//}
 
 // This one stores the question answers. Then when admin presses next it updates all the scores and sends it back.
 class MCQuestionController {
@@ -374,7 +378,7 @@ class MCQuestionController {
 }
 
 // This stores responses and feeds them back and listens to votes. Then when admin says next it updates the scores.
-class WrittenQuestionController {
+class PopularVoteQuestionController {
 
 }
 

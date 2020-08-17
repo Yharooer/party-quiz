@@ -151,6 +151,11 @@ app.post('/admin/reset_waiting', checkAdmin, (req, res) => {
     res.redirect('/');
 });
 
+app.post('/admin/set_redirect', checkAdmin, (req, res) => {
+    page_manager.setRedirect();
+    res.redirect('/');
+});
+
 app.get('/dashboard', checkAuthenticated, (req, res) => {
     Question.getAll(qs => res.render(__dirname + '/www/dashboard.ejs', {user: req.user, questions: qs, username: req.user.username}));
 });

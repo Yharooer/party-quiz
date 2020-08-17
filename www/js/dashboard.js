@@ -74,10 +74,17 @@ window.addEventListener('load', function() {
         authorField.value = MY_USERNAME;
         form.appendChild(authorField);
 
-        var authorField = document.createElement('input');
-        authorField.name = 'type';
-        authorField.value = 'mc';
-        form.appendChild(authorField);
+        var typeField = document.createElement('input');
+        typeField.name = 'type';
+        typeField.value = 'mc';
+        form.appendChild(typeField);
+
+        if (MULT_CHOICE.imageSrc != null) {
+            var imgField = document.createElement('input');
+            imgField.name = 'imageSrc';
+            imgField.value = MULT_CHOICE.imageSrc;
+            form.appendChild(imgField);
+        }
 
         for (i=0; i<MULT_CHOICE.num_choices; i++) {
             var numField = document.createElement('input');
@@ -124,10 +131,17 @@ window.addEventListener('load', function() {
         authorField.value = MY_USERNAME;
         form.appendChild(authorField);
 
-        var authorField = document.createElement('input');
-        authorField.name = 'type';
-        authorField.value = 'pv';
-        form.appendChild(authorField);
+        var typeField = document.createElement('input');
+        typeField.name = 'type';
+        typeField.value = 'pv';
+        form.appendChild(typeField);
+
+        if (POP_VOTE.imageSrc != null) {
+            var imgField = document.createElement('input');
+            imgField.name = 'imageSrc';
+            imgField.value = POP_VOTE.imageSrc;
+            form.appendChild(imgField);
+        }
 
         document.body.appendChild(form);
         form.submit();
@@ -174,4 +188,46 @@ function section_pop_vote() {
 
     mc.style.display = 'none';
     pv.style.display = 'block';
+}
+
+function onMcImageUpload() {
+    var file = document.getElementById('mc_image_upload');
+    var form = new FormData();
+    form.append('image', file.files[0]);
+
+    fetch('https://api.imgbb.com/1/upload?key=dfbae1ae3109f8db0631f8f48b4f9d65', {
+        method: 'POST',
+        body: form
+    }).then(response => response.json())
+    .then(data => {
+        if (data.status == 200) {
+            MULT_CHOICE.imageSrc = data.data.display_url;
+            var box = document.getElementById('mc_image_div');
+            box.innerHTML = '<p style="margin-top:0; margin-bottom:4px;">Image: <img src="' + data.data.display_url + '" class="dash_image"></img></p>';
+        } else {
+            var box = document.getElementById('mc_image_div');
+            box.innerHTML = '<p style="margin-top:0; margin-bottom:4px;>Failed to upload image.</p>';
+        }
+    });
+}
+
+function onPvImageUpload() {
+    var file = document.getElementById('pv_image_upload');
+    var form = new FormData();
+    form.append('image', file.files[0]);
+
+    fetch('https://api.imgbb.com/1/upload?key=dfbae1ae3109f8db0631f8f48b4f9d65', {
+        method: 'POST',
+        body: form
+    }).then(response => response.json())
+    .then(data => {
+        if (data.status == 200) {
+            POP_VOTE.imageSrc = data.data.display_url;
+            var box = document.getElementById('pv_image_div');
+            box.innerHTML = '<p style="margin-top:0; margin-bottom:4px;">Image:&nbsp;&nbsp;<img src="' + data.data.display_url + '" class="dash_image"></img></p>';
+        } else {
+            var box = document.getElementById('pv_image_div');
+            box.innerHTML = '<p style="margin-top:0; margin-bottom:4px;>Failed to upload image.</p>';
+        }
+    });
 }

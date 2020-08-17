@@ -19,8 +19,8 @@
   <h1>Who are you?</h1>
   <div id='login_list'>
     <% guests.forEach(function(guest) { %>
-      <% // if (guest.username !== 'admin') { %>
-      <% if (true) { %>
+      <% if (guest.username !== 'admin') { %>
+      <% // if (true) { %>
         <%- include('login_guests.ejs', {guest: guest}); %>
       <% } %>
     <% }); %>

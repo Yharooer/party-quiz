@@ -1,5 +1,8 @@
 <div class='dashdisp_pv<% if (question.author != username) { %> dashdisp_hidden<% } %>'>
     <h3 style='margin-block-end: 0.5em;'><%= question.data.prompt %></h3>
+    <% if (question.data.imageSrc != null) { %>
+        <img src='<%= question.data.imageSrc %>' class='dash_image' style='display:block;'></img>
+    <% } %>
     <small>Popular vote for the best answer.</small><br />
     <button onclick='deleteQuestion("<%= question._id %>");''>Delete</button>
 </div>
