@@ -68,6 +68,9 @@ app.use('/question', checkAuthenticated, (req, res) => {
             case 'mc':
                 res.render(__dirname + '/www/question_templates/mc.ejs', {username: req.user.username, question: q, author_name: author_name});
                 break;
+            case 'pv':
+                res.render(__dirname + '/www/question_templates/pv.ejs', {username: req.user.username, question: q, author_name: author_name});
+                break;
             default:
                 res.status(400).send('Unknown question type.');
         }

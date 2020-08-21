@@ -4,12 +4,13 @@ const Preferences = require('./preferences');
 const Question = require('./question');
 
 const activeParticipants = [];
+const visibleNameCache = {};
 
 function init_quiz_backend(server) {
-    const wss = new WebSocket.Server({server});
+    const wss = new WebSocket.Server({ server });
     const pm = new PagesManager();
 
-    wss.on('connection', function(ws) {
+    wss.on('connection', function (ws) {
         const participant = new Participant(ws, pm);
         activeParticipants.push(participant);
         participant.onConnect();
@@ -43,7 +44,7 @@ class Participant {
         console.log(`Participant ${this.username} disconnected.`);
         Participant.sendToAll({
             action: 'EXIT',
-            username: this.user.username
+            username: this.username
         });
     }
 
@@ -52,18 +53,18 @@ class Participant {
 
         let inputData;
         try { inputData = JSON.parse(message); }
-        catch(e) {
+        catch (e) {
             console.warn("Unable to parse input data: " + message);
             return;
         }
 
-        switch(inputData.action) {
+        switch (inputData.action) {
             case "PAGE_NEXT":
                 if (this.username == "admin") {
                     this.onNextPage();
                 }
                 break;
-            
+
             case "PAGE_PREV":
                 if (this.username == "admin") {
                     this.onPrevPage();
@@ -77,6 +78,8 @@ class Participant {
                     if (success) {
                         // Set user params.
                         this.user = user;
+
+                        visibleNameCache[this.username] = this.user.visible_name;
 
                         // Tell user which pages are open.
                         this.send({
@@ -93,30 +96,39 @@ class Participant {
                         });
 
                         // Tell user what the current scores are.
-                        let curr_scores = {};
-                        activeParticipants.forEach(p => {
-                            if (p.user != null) {
-                                curr_scores[p.username] = p.user.updateScore();
-                            }
-                        });
-                        this.send({
-                            action: "SCORES",
-                            scores: curr_scores
-                        });
+                        Participant.sendScores();
                     }
                 })
                 break;
-            
+
             case 'SUBMIT':
                 this.pagesManager.onAnswerSubmit(inputData, this.username);
                 break;
-            
+
+            case 'VOTE':
+                this.pagesManager.onVote(inputData, this.username);
+                break;
+                
             case 'ADVANCE':
                 this.pagesManager.onAdvance(inputData);
                 break;
 
         }
 
+    }
+
+    static sendScores() {
+        let curr_scores = {};
+        activeParticipants.forEach(p => {
+            if (p.user != null) {
+                curr_scores[p.username] = p.user.getScore();
+            }
+        });
+        Participant.sendToAll({
+            action: "SCORES",
+            scores: curr_scores,
+            visibleNameCache: visibleNameCache
+        });
     }
 
     onNextPage() {
@@ -157,7 +169,7 @@ class Participant {
 class PagesManager {
     constructor() {
         this.loaded = false;
-        this.loadedCb = () => {};
+        this.loadedCb = () => { };
         Preferences.getPrefs().then(prefs => {
             this.data = prefs;
             this.loaded = true;
@@ -177,6 +189,13 @@ class PagesManager {
         const theqc = this.questionControllers.find(qc => qc == null ? false : qc.id == packet.id);
         if (theqc != undefined) {
             theqc.onAnswerSubmit(packet.answer, username);
+        }
+    }
+
+    onVote(packet, username) {
+        const theqc = this.questionControllers.find(qc => qc == null ? false : qc.id == packet.id);
+        if (theqc != undefined) {
+            theqc.onVote(username, packet.user, packet.vote);
         }
     }
 
@@ -212,9 +231,13 @@ class PagesManager {
             const path = this.data.questionOrder[index];
             if (path != null && path.startsWith('/question/')) {
                 const id = path.replace('/question/', '');
-                const question = Question.getQuestion(id, (success, question) => {
+                Question.getQuestion(id, (success, question) => {
                     if (question.type == 'mc') {
-                        this.questionControllers[index] = new MCQuestionController(question,index);
+                        this.questionControllers[index] = new MCQuestionController(question, index);
+                        this.questionControllers[index].onResume();
+                    }
+                    if (question.type == 'pv') {
+                        this.questionControllers[index] = new PopularVoteQuestionController(question, index);
                         this.questionControllers[index].onResume();
                     }
                     // ADD OTHER QUESTION TYPES HERE.
@@ -247,7 +270,6 @@ class PagesManager {
             this.data.currentIndex = 0;
         }
 
-        this.questionControllers = [];
         this.createQuestionController(this.data.currentIndex == null ? 0 : this.data.currentIndex);
 
         let update_pages = [];
@@ -263,6 +285,8 @@ class PagesManager {
             this.loadedCb = () => this.reorderAllQuestions();
             return;
         }
+
+        this.resetScores();
 
         const allQuestions = await Question.getAllAsync();
 
@@ -282,6 +306,17 @@ class PagesManager {
         this.questionControllers = [];
         this.createQuestionController(this.data.currentIndex == null ? 0 : this.data.currentIndex);
     }
+    
+    async resetScores() {
+        const users = await User.find({});
+        users.forEach(user => {
+            user.scores = [];
+            user.total_score = 0;
+            user.markModified('scores');
+            user.markModified('total_score');
+            user.save().then();
+        });
+    }
 
     shuffleArray(array) {
         for (let i = array.length - 1; i > 0; i--) {
@@ -296,6 +331,7 @@ class PagesManager {
             return;
         }
 
+        this.questionControllers = [];
         this.data.questionOrder = ['/pages/waiting'];
         this.data.currentIndex = 0;
         this.updatePreferences();
@@ -308,6 +344,7 @@ class PagesManager {
             return;
         }
 
+        this.questionControllers = [];
         this.data.questionOrder = ['/pages/redirect'];
         this.data.currentIndex = 0;
         this.updatePreferences();
@@ -322,7 +359,7 @@ class MCQuestionController {
         this.question = question;
         this.id = question._id;
         this.answer = question.data.answer;
-        this.letters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p'];
+        this.letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p'];
         this.answer_numeric = this.answer == -1 ? undefined : this.letters[this.answer];
         this.participantAnswers = {};
         this.index = index;
@@ -330,7 +367,6 @@ class MCQuestionController {
     }
 
     onAnswerSubmit(answer, username) {
-        console.log(`username is ${username}`);
         this.participantAnswers[username] = answer;
         const allAnswered = activeParticipants.every(p => this.participantAnswers[p.username] != null);
         if (allAnswered) {
@@ -342,7 +378,6 @@ class MCQuestionController {
         if (this.answer == -1) {
             this.answer_numeric = this.participantAnswers['admin'];
         }
-        console.log(this.participantAnswers);
 
         this.updateAllScores();
         Participant.sendToAll({
@@ -354,24 +389,21 @@ class MCQuestionController {
     }
 
     updateAllScores() {
-        let curr_scores = {};
         activeParticipants.forEach(p => {
             const ans = this.participantAnswers[p.username];
             if (ans != null) {
-                p.user.scores[this.index] = ans == this.answer_numeric ? 4 : 0;
-                curr_scores[p.username] = p.user.updateScore();
+                if (this.answer != -1 || p.username != 'admin') {
+                    p.user.setScore(this.index, ans == this.answer_numeric ? 4 : 0); // TODO set to number of options
+                } else {
+                    p.user.setScore(this.index, 0);
+                }
             }
         });
-
-        Participant.sendToAll({
-            action: "SCORES",
-            scores: curr_scores
-        });
-
+        Participant.sendScores();
     }
 
     onResume() {
-        activeParticipants.forEach(p => {this.onUserResume(p)});
+        activeParticipants.forEach(p => { this.onUserResume(p) });
     }
 
     onUserResume(p) {
@@ -388,7 +420,106 @@ class MCQuestionController {
 
 // This stores responses and feeds them back and listens to votes. Then when admin says next it updates the scores.
 class PopularVoteQuestionController {
+    constructor(question, index) {
+        this.question = question;
+        this.id = question._id;
+        this.participantAnswers = {};
+        this.index = index;
+        this.advanced = false;
+        this.answerVotes = {};
+        this.latestPassons = [];
+        this.participantThumbs = {};
+    }
 
+    onAnswerSubmit(answer, username) {
+        if (this.advanced) {
+            activeParticipants[username].send(this.latestPassons);
+            return;
+        }
+        this.participantAnswers[username] = answer;
+        this.answerVotes[username] = {};
+        this.updateClients();
+    }
+
+    onVote(username, ansPerson, vote) {
+        if (this.advanced) {
+            if (activeParticipants[username] != null) {
+                activeParticipants[username].send(this.latestPassons);
+            }
+            return;
+        }
+        this.answerVotes[ansPerson][username] = vote;
+        this.updateClients();
+    }
+
+    onAdvance() {
+        this.advanced = true;
+        this.updatePasson();
+        Participant.sendToAll({
+            action: 'QUESTION_TEMPLATE',
+            secondary_action: 'ANSWER',
+            answer: this.latestPassons,
+            final: true
+        });
+        this.updateAllScores();
+    }
+
+    updatePasson() {
+        this.latestPassons = [];
+        for (const [key, val] of Object.entries(this.participantAnswers)) {
+            let thumbsUp = 0;
+            for (const [key2, val2] of Object.entries(this.answerVotes[key])) {
+                if (val2) {
+                    thumbsUp++;
+                }
+            }
+            this.participantThumbs[key] = thumbsUp;
+            this.latestPassons.push({
+                user: key,
+                answer: val,
+                votes: thumbsUp,
+                visible_name: visibleNameCache[key]
+            });
+        }
+    }
+
+    updateClients() {
+        console.log('UPDATING CLIENTS');
+        console.log(this.participantAnswers);
+        this.updatePasson();
+        Participant.sendToAll({
+            action: 'QUESTION_TEMPLATE',
+            secondary_action: 'ANSWER',
+            answer: this.latestPassons,
+            final: false
+        });
+    }
+
+    updateAllScores() {
+        const totalScores = this.latestPassons.map(e => e.votes).reduce((a, b) => a + b, 0);
+
+        let curr_scores = {};
+        activeParticipants.forEach(p => {
+            let points = this.participantThumbs[p.username] || 0;
+            points = Math.ceil(points / totalScores * Object.keys(this.participantAnswers).length);
+            p.user.setScore(this.index, points);
+        });
+
+        Participant.sendScores();
+    }
+
+    onResume() {
+        activeParticipants.forEach(p => { this.onUserResume(p) });
+    }
+
+    onUserResume(p) {
+        p.send({
+            action: 'QUESTION_TEMPLATE',
+            secondary_action: 'ANSWER',
+            answer: this.latestPassons,
+            final: false
+        });
+    }
 }
 
 module.exports = init_quiz_backend;

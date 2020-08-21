@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="/css/style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script type="text/javascript" src="/js/question_controller.js"></script>
-  <script type="text/javascript" src="/js/mc.js"></script>
+  <script type="text/javascript" src="/js/pv.js"></script>
   <script>
     QUESTION_CONTROLLER.id = '<%= question._id %>';
   </script>
@@ -28,18 +28,16 @@
       <div class='question_subtext'>Submitted by <%= author_name %>.</div>
     <% } %>
 
-    <% var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p']; %>
-    <% letters.forEach(function(letter, i) { %>
-      <% if (question.data['mc_' + letter] != null) { %>
-        <div id='mc_answer_<%= letter %>' class='mc_answer' onclick="MC_QC.selectAnswer('<%= letter %>');">
-          <b><%= letter.toUpperCase() %>: </b><%= question.data['mc_'+letter] %>
-        </div>
-      <% } %>
-    <% }); %>
+    <div id='pv_submit'>
+      <input onchange='widthChecker();' type='text' id='question_pv_textbox' autocomplete="off" name='submission'>
 
-    <% if (question.data.answer == -1) { %>
-      <small>Bentley chooses the correct answer.</small>
-    <% } %>
+      <button onclick='PV_QC.submit();' id='question_pv_submit'>Submit</button>
+
+      <small>This is a popular vote question. Answers with the most votes receive points.</small>
+    </div>
+    <div id='pv_vote' style='display: none;'>
+      
+    </div>
     
     <%  if (username == 'admin') { %>
       <div id='footer'>

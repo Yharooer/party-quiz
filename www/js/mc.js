@@ -1,14 +1,15 @@
 QUESTION_CONTROLLER.onAnswerReceive = function (ans) {
     MC_QC.letters.forEach(function(letter) {
         var el = document.getElementById('mc_answer_' + letter)
-        if (el != null) {
-            el.onclick = function() {};
+        if (el == null) {
+            return;
         }
         if (letter != ans) {
             el.classList.add('incorrect');
         } else {
             el.classList.add('correct');
         }
+        el.onclick = function() {};
     });
 };
 

@@ -1,5 +1,5 @@
 QUESTION_CONTROLLER = {
-    onAnswerSubmit: function(ans) {
+    onAnswerSubmit: function (ans) {
         QUESTION_CONTROLLER.sendPacket({
             action: 'SUBMIT',
             id: QUESTION_CONTROLLER.id,
@@ -11,11 +11,15 @@ QUESTION_CONTROLLER = {
         // Stuff goes here.
     },
 
-    getSocket : function () {
+    onFinal : function() {
+        // Stuff goes here
+    },
+
+    getSocket: function () {
         return window.top.QUIZ.socket;
     },
 
-    sendPacket : function (data) {
+    sendPacket: function (data) {
         window.top.QUIZ.sendServer(data);
     },
 
@@ -26,22 +30,29 @@ QUESTION_CONTROLLER = {
         });
     },
 
-    onSecondaryMessage: function(packet) {
-        switch(packet.secondary_action) {
+    onSecondaryMessage: function (packet) {
+        switch (packet.secondary_action) {
             case 'ANSWER':
                 QUESTION_CONTROLLER.onAnswerReceive(packet.answer);
+                if (packet.final == true) {
+                    QUESTION_CONTROLLER.onFinal();
+                }
+
                 break;
-    
+
             case 'RESUME':
                 QUESTION_CONTROLLER.onChildResume(packet);
                 if (packet.answer != null) {
-                    QUESTION_CONTROLLER.onAnswerSubmit(packet.answer);
+                    if (MC_QC != null) {
+                        MC_QC.selectAnswer(packet.selected_ans);
+                    }
+                    QUESTION_CONTROLLER.onAnswerReceive(packet.answer);
                 }
                 break;
         }
     },
 
-    onChildResume: function(packet) {
+    onChildResume: function (packet) {
         // Can add functionality here.
     }
 };

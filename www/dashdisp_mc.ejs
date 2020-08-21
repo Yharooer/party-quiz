@@ -12,7 +12,7 @@
     <% if (question.data['answer'] == -1) { %>
         <small style='display:block;'>Bentley chooses the correct answer.</small>
     <% } %>
-    <% if (question.data.anon) { %>
+    <% if (false) { %>
         <small style='display:block;'>Your name will be hidden when displaying the quiz. (Bentley can still see who submitted the question.)</small>
     <% } %>
     <button onclick='deleteQuestion("<%= question._id %>");''>Delete</button>
