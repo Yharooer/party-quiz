@@ -84,7 +84,9 @@ class Participant {
                         // Tell user which pages are open.
                         this.send({
                             action: 'PAGE_RESET',
-                            pages: this.pagesManager.getCurrentPages()
+                            pages: this.pagesManager.getCurrentPages(),
+                            index: this.pagesManager.getCurrentIndex(),
+                            numQuestions: this.pagesManager.getCurrentLength()
                         });
 
                         // Tell everyone this user has entered.
@@ -137,7 +139,9 @@ class Participant {
         if (hasNext) {
             Participant.sendToAll({
                 action: 'PAGE_NEXT',
-                pages: this.pagesManager.getCurrentPages()
+                pages: this.pagesManager.getCurrentPages(),
+                index: this.pagesManager.getCurrentIndex(),
+                numQuestions: this.pagesManager.getCurrentLength()
             });
         }
     }
@@ -148,7 +152,9 @@ class Participant {
         if (hasPrev) {
             Participant.sendToAll({
                 action: 'PAGE_PREV',
-                pages: this.pagesManager.getCurrentPages()
+                pages: this.pagesManager.getCurrentPages(),
+                index: this.pagesManager.getCurrentIndex(),
+                numQuestions: this.pagesManager.getCurrentLength()
             });
         }
     }
@@ -179,6 +185,22 @@ class PagesManager {
         }, e => console.log('An error occured ' + e));
         this.participants = [];
         this.questionControllers = [];
+    }
+
+    getCurrentIndex() {
+        if (this.data != null && this.data.currentIndex != null) {
+            return this.data.currentIndex + 1;
+        } else {
+            return 0;
+        }
+    }
+
+    getCurrentLength() {
+        if (this.data != null && this.data.questionOrder != null) {
+            return this.data.questionOrder.length;
+        } else {
+            return 0;
+        }
     }
 
     updatePreferences() {
@@ -251,7 +273,9 @@ class PagesManager {
     callPageReset() {
         Participant.sendToAll({
             action: 'PAGE_RESET',
-            pages: this.getCurrentPages()
+            pages: this.getCurrentPages(),
+            index: this.getCurrentIndex(),
+            numQuestions: this.getCurrentLength()
         });
     }
 

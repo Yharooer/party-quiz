@@ -680,4 +680,18 @@ button.squircle:active {
   grid-area: score;
 }
 
+#question_numbering {
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+}
 
+@media only screen and (max-width: 830px) {
+  #side_bar {
+    display: none;
+  }
+
+  #index_page {
+    grid-template-columns: auto 0px;
+  }
+}

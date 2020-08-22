@@ -18,15 +18,18 @@ var QUIZ = {
                 QUIZ.frame_active = (QUIZ.frame_active + 1 + 3) % 3;
                 QUIZ.swapFrames();
                 QUIZ.updateFrames(inputData.pages);
+                QUIZ.updateCounter(inputData.index, inputData.numQuestions);
                 break;
             case "PAGE_PREV":
                 QUIZ.frame_active = (QUIZ.frame_active - 1 + 3) % 3;
                 QUIZ.swapFrames();
                 QUIZ.updateFrames(inputData.pages);
+                QUIZ.updateCounter(inputData.index, inputData.numQuestions);
                 break;
             case "PAGE_RESET":
                 QUIZ.swapFrames();
                 QUIZ.updateFrames(inputData.pages);
+                QUIZ.updateCounter(inputData.index, inputData.numQuestions);
                 break;
             case 'QUESTION_TEMPLATE':
                 try {
@@ -63,6 +66,10 @@ var QUIZ = {
         if (QUIZ.lastScore != null && QUIZ.vncache != null) {
             QUIZ.onScore(QUIZ.lastScore, QUIZ.vncache);
         }
+    },
+
+    updateCounter: function(index, total) {
+        document.getElementById('question_numbering').innerHTML = 'Question ' + index + '/' + total;  
     },
 
     swapFrames: function () {
