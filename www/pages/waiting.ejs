@@ -12,11 +12,10 @@
 
 </head>
 
-<body style='max-width: 800px; text-align: center;'>
-    <h1 class='party_header'>The Quiz Hasn't Started Yet!!!</h1>
-    <p style='text-align:center; font-size: 24pt;'>Go to the dashboard to submit questions for the quiz!</p>
-    <p style='text-align:center; font-size: 18pt;'>If you don't submit questions, I will be sad. :(</p>
-    <p style='text-align:center; font-size: 12pt;'>Also I can see how many questions you each submit.<br />So, if I don't want to hang out with you after this... that might be why...</p>
-    <button onclick='top.window.location.replace("/dashboard");' class='big_dash_button' style='margin-top:10px;'>Dashboard</button>
+<body style='max-width: 1216px; text-align: center;'>
+    <h1 style='max-width: 800px; display:block; margin:auto;' class='party_header'>The Quiz Hasn't Started Yet!!!</h1>
+    <p style='max-width:800px; display:block; margin: auto; text-align:center; font-size: 24pt;'>Go to the <a href='/dashboard'>dashboard</a> to submit questions for the quiz!</p>
+	<p>Alternatively, why don't we play Volleyball...</p>
+	<iframe width="1216" height="784" style='overflow:hidden;' src="https://www.kelseycarriage.co.uk/game?<%= username %>"></iframe>
 </body>
 </html>
